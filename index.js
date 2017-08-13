@@ -20,7 +20,7 @@ const transform = opts => (rules, result = {}) => {
       return
     }
 
-    const [ selector ] = rule.selectors
+    const [selector] = rule.selectors
     const key = selector.replace(SELRE, '').trim()
 
     if (key.length) {
@@ -47,12 +47,11 @@ const getDeclarations = (decs, opts = {}) => {
   return result
 }
 
-const camel = str => str
-  .replace(/(-[a-z])/g, x => x.toUpperCase())
-  .replace(/-/g, '')
+const camel = str =>
+  str.replace(/(-[a-z])/g, x => x.toUpperCase()).replace(/-/g, '')
 
-const parsePx = val => /px$/.test(val)
-  ? parseFloat(val.replace(/px$/, ''))
-  : val
+const parsePx = val =>
+  // unitless numbers and px values
+  /^-?\d+(?:px)?$/.test(val) ? parseFloat(val) : val
 
 module.exports = toObj
